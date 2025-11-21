@@ -6,6 +6,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Icon from "@/components/ui/icon";
 
 const doctors = [
@@ -36,41 +43,6 @@ const doctors = [
     specialty: "Невролог",
     experience: "10 лет",
     image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/29e1e8aa-af44-4320-9719-c1a48b0248e3.jpg"
-  },
-  {
-    id: 5,
-    name: "Новикова Мария Александровна",
-    specialty: "Эндокринолог",
-    experience: "14 лет",
-    image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/5e09cf16-c363-4bbe-b1dd-15a1dd3e9ef8.jpg"
-  },
-  {
-    id: 6,
-    name: "Соколов Игорь Владимирович",
-    specialty: "УЗИ-диагност",
-    experience: "16 лет",
-    image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/29e1e8aa-af44-4320-9719-c1a48b0248e3.jpg"
-  },
-  {
-    id: 7,
-    name: "Васильева Ольга Николаевна",
-    specialty: "Терапевт",
-    experience: "11 лет",
-    image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/5e09cf16-c363-4bbe-b1dd-15a1dd3e9ef8.jpg"
-  },
-  {
-    id: 8,
-    name: "Морозов Сергей Петрович",
-    specialty: "Кардиолог",
-    experience: "20 лет",
-    image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/29e1e8aa-af44-4320-9719-c1a48b0248e3.jpg"
-  },
-  {
-    id: 9,
-    name: "Лебедева Татьяна Игоревна",
-    specialty: "Гинеколог",
-    experience: "13 лет",
-    image: "https://cdn.poehali.dev/projects/b32feb6d-2122-43b4-89c6-c6ddc6ff5d7d/files/5e09cf16-c363-4bbe-b1dd-15a1dd3e9ef8.jpg"
   }
 ];
 
@@ -214,29 +186,41 @@ export default function Index() {
       <section className="py-20 px-4 bg-[#f3f3f4]">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
-            Опытные и внимательные специалисты
+            Наши врачи с заботой о вас
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {doctors.map((doctor) => (
-              <Card key={doctor.id} className="overflow-hidden hover-scale border-none shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex flex-col items-center text-center">
-                    <img 
-                      src={doctor.image} 
-                      alt={doctor.name}
-                      className="w-32 h-32 rounded-full object-cover mb-4"
-                    />
-                    <h3 className="font-semibold text-lg text-[#2f4050] mb-2">{doctor.name}</h3>
-                    <p className="text-[#1ab394] font-medium mb-1">{doctor.specialty}</p>
-                    <p className="text-sm text-[#2f4050]/60 mb-4">Стаж: {doctor.experience}</p>
-                    <Button variant="outline" className="border-[#1ab394] text-[#1ab394] hover:bg-[#1ab394] hover:text-white">
-                      Подробнее
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-5xl mx-auto"
+          >
+            <CarouselContent>
+              {doctors.map((doctor) => (
+                <CarouselItem key={doctor.id} className="md:basis-1/2 lg:basis-1/4">
+                  <Card className="overflow-hidden hover-scale border-none shadow-sm">
+                    <CardContent className="p-6">
+                      <div className="flex flex-col items-center text-center">
+                        <img 
+                          src={doctor.image} 
+                          alt={doctor.name}
+                          className="w-32 h-32 rounded-full object-cover mb-4"
+                        />
+                        <h3 className="font-semibold text-lg text-[#2f4050] mb-2">{doctor.name}</h3>
+                        <p className="text-[#1ab394] font-medium mb-1">{doctor.specialty}</p>
+                        <p className="text-sm text-[#2f4050]/60 mb-4">Стаж: {doctor.experience}</p>
+                        <Button variant="outline" className="border-[#1ab394] text-[#1ab394] hover:bg-[#1ab394] hover:text-white">
+                          Подробнее
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="-left-12 border-[#1ab394] text-[#1ab394] hover:bg-[#1ab394] hover:text-white" />
+            <CarouselNext className="-right-12 border-[#1ab394] text-[#1ab394] hover:bg-[#1ab394] hover:text-white" />
+          </Carousel>
         </div>
       </section>
 
