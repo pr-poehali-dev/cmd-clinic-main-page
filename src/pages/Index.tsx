@@ -14,6 +14,29 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Icon from "@/components/ui/icon";
+import { useEffect, useRef, useState } from "react";
+
+const useInView = (options = {}) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.1, ...options });
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, isInView] as const;
+};
 
 const doctors = [
   {
@@ -145,10 +168,27 @@ const reviews = [
 ];
 
 export default function Index() {
+  const [heroRef, heroInView] = useInView();
+  const [doctorsRef, doctorsInView] = useInView();
+  const [advantagesRef, advantagesInView] = useInView();
+  const [servicesRef, servicesInView] = useInView();
+  const [approachRef, approachInView] = useInView();
+  const [pathRef, pathInView] = useInView();
+  const [reviewsRef, reviewsInView] = useInView();
+  const [infusionRef, infusionInView] = useInView();
+  const [promotionsRef, promotionsInView] = useInView();
+  const [faqRef, faqInView] = useInView();
+  const [contactsRef, contactsInView] = useInView();
+
   return (
     <div className="min-h-screen bg-white">
       <section className="py-24 md:py-32 px-4">
-        <div className="container mx-auto max-w-6xl text-center">
+        <div 
+          ref={heroRef}
+          className={`container mx-auto max-w-6xl text-center transition-all duration-1000 ${
+            heroInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h1 className="text-4xl md:text-6xl font-bold text-[#2f4050] mb-6 leading-tight">
             Честный подход к медицине: без лишних анализов и назначений
           </h1>
@@ -184,7 +224,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={doctorsRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            doctorsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Наши врачи с заботой о вас
           </h2>
@@ -225,7 +270,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={advantagesRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            advantagesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Почему пациенты выбирают ЦМД
           </h2>
@@ -243,7 +293,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={servicesRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            servicesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Направления клиники
           </h2>
@@ -261,7 +316,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl text-center">
+        <div 
+          ref={approachRef}
+          className={`container mx-auto max-w-6xl text-center transition-all duration-1000 delay-150 ${
+            approachInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] mb-16">
             Наш подход к медицине
           </h2>
@@ -281,7 +341,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={pathRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            pathInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Путь пациента
           </h2>
@@ -312,7 +377,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={reviewsRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            reviewsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Отзывы пациентов
           </h2>
@@ -335,7 +405,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl text-center">
+        <div 
+          ref={infusionRef}
+          className={`container mx-auto max-w-6xl text-center transition-all duration-1000 delay-150 ${
+            infusionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] mb-4">
             Инфузионные программы для восстановления
           </h2>
@@ -356,7 +431,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={promotionsRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            promotionsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Акции и предложения
           </h2>
@@ -378,7 +458,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4">
-        <div className="container mx-auto max-w-4xl">
+        <div 
+          ref={faqRef}
+          className={`container mx-auto max-w-4xl transition-all duration-1000 delay-150 ${
+            faqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Часто задаваемые вопросы
           </h2>
@@ -423,7 +508,12 @@ export default function Index() {
       </section>
 
       <section className="py-20 px-4 bg-[#f3f3f4]">
-        <div className="container mx-auto max-w-6xl">
+        <div 
+          ref={contactsRef}
+          className={`container mx-auto max-w-6xl transition-all duration-1000 delay-150 ${
+            contactsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-[#2f4050] text-center mb-16">
             Контакты
           </h2>
